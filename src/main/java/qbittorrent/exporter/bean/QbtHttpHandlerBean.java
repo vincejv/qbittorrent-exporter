@@ -33,6 +33,9 @@ public class QbtHttpHandlerBean {
     @ConfigProperty(name = "qbittorrent.exporter.baseUrl")
     private String baseUrl;
 
+    @ConfigProperty(name = "qbittorrent.exporter.locale")
+    private String locale;
+
     /**
      * Creates a {@link QbtHttpHandler} instance using the default configurations
      *
@@ -42,7 +45,7 @@ public class QbtHttpHandlerBean {
     QbtHttpHandler qbtHttpHandler() {
         final ApiClient client = new ApiClient(baseUrl, username, password);
         try {
-            return new QbtHttpHandler(client);
+            return new QbtHttpHandler(client, locale);
         } catch (Exception e) {
             Log.error("Unable to create HTTP handler", e);
             return null;

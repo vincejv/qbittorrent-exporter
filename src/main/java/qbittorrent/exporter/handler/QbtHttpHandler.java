@@ -11,7 +11,9 @@ import qbittorrent.api.model.ServerState;
 import qbittorrent.api.model.Torrent;
 import qbittorrent.exporter.collector.QbtCollector;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class QbtHttpHandler implements HttpHandler {
 
@@ -20,12 +22,14 @@ public class QbtHttpHandler implements HttpHandler {
     private final PrometheusMeterRegistry registry;
     private final QbtCollector collector;
     private final ApiClient client;
+    private final Locale locale;
 
-    public QbtHttpHandler(final ApiClient client) {
+    public QbtHttpHandler(final ApiClient client, final String locale) {
         this.client = client;
         this.registry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
         this.collector = new QbtCollector();
         this.registry.getPrometheusRegistry().register(collector);
+        this.locale = Locale.forLanguageTag(locale);
     }
 
     @Override
@@ -46,7 +50,7 @@ public class QbtHttpHandler implements HttpHandler {
             collector.setGlobalSessionUploadedBytes(serverState.getUpInfoData());
             collector.setGlobalDownloadSpeedBytes(serverState.getDlInfoSpeed());
             collector.setGlobalUploadSpeedBytes(serverState.getUpInfoSpeed());
-            collector.setGlobalRatio(Double.parseDouble(serverState.getGlobalRatio()));
+            collector.setGlobalRatio(NumberFormat.getInstance(locale).parse(serverState.getGlobalRatio()).doubleValue());
             collector.setAppDownloadRateLimitBytes(serverState.getDlRateLimit());
             collector.setAppUploadRateLimitBytes(serverState.getUpRateLimit());
             collector.setAppAlternateDownloadRateLimitBytes(preferences.getAltDlLimit());

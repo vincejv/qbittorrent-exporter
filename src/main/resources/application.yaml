@@ -15,3 +15,4 @@ qbittorrent:
     port: ${QBITTORRENT_PORT:8080}
     protocol: ${QBITTORRENT_PROTOCOL:http}
     baseUrl: ${QBITTORRENT_BASE_URL:${qbittorrent.exporter.protocol}://${qbittorrent.exporter.host}:${qbittorrent.exporter.port}}
+    locale: ${QBITTORRENT_LOCALE:en-US}
