@@ -4,6 +4,8 @@ quarkus:
     port: ${METRICS_PORT:17871}
   resteasy-reactive:
     path: ${METRICS_PATH:/metrics}
+  native:
+    additional-build-args: -march=compatibility
 
 qbittorrent:
   exporter:

@@ -31,10 +31,6 @@ jobs:
         with:
           java-version: 17
           distribution: 'adopt'
-      - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@v1
-      - name: Run the Gradle package task
-        run: './gradlew build -Dquarkus.package.type=native'
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
