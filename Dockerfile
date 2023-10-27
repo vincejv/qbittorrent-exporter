@@ -18,4 +18,4 @@ WORKDIR /work/
 COPY --from=build /code/build/*-runner /work/application
 RUN chmod 775 /work
 EXPOSE 8080
-CMD ["./application"]
+CMD ["./application", "-Xmx50m"]
