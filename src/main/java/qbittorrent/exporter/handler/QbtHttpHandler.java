@@ -2,8 +2,9 @@ package qbittorrent.exporter.handler;
 
 import io.micrometer.prometheus.PrometheusConfig;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
-import io.quarkus.logging.Log;
 import io.vertx.core.http.HttpServerResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import qbittorrent.api.ApiClient;
 import qbittorrent.api.model.MainData;
 import qbittorrent.api.model.Preferences;
@@ -17,6 +18,7 @@ import java.util.Locale;
 
 public class QbtHttpHandler implements HttpHandler {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(QbtHttpHandler.class);
     private static final String CONTENT_TYPE = "text/plain;charset=utf-8";
     public static final String CONTENT_TYPE_HDR_NAME = "Content-Type";
     private final PrometheusMeterRegistry registry;
@@ -34,7 +36,7 @@ public class QbtHttpHandler implements HttpHandler {
 
     @Override
     public void handleRequest(HttpServerResponse serverResponse) {
-        Log.info("Beginning prometheus metrics collection...");
+        LOGGER.info("Beginning prometheus metrics collection...");
         final long start = System.nanoTime();
         try {
             final List<Torrent> torrents = client.getTorrents();
@@ -85,11 +87,11 @@ public class QbtHttpHandler implements HttpHandler {
             }
 
             final long duration = (System.nanoTime() - start) / 1_000_000;
-            Log.infov("Completed in {0}ms", duration);
+            LOGGER.info("Completed in {}ms", duration);
             serverResponse.putHeader(CONTENT_TYPE_HDR_NAME, CONTENT_TYPE);
             serverResponse.send(registry.scrape());
         } catch (Exception e) {
-            Log.error("An error occurred calling API", e);
+            LOGGER.error("An error occurred calling API", e);
             serverResponse.putHeader(CONTENT_TYPE_HDR_NAME, CONTENT_TYPE);
             serverResponse.setStatusCode(500);
             serverResponse.send("An error occurred. " + e.getMessage());

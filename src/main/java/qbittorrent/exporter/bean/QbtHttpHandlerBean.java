@@ -1,9 +1,10 @@
 package qbittorrent.exporter.bean;
 
-import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import qbittorrent.api.ApiClient;
 import qbittorrent.exporter.handler.QbtHttpHandler;
 
@@ -14,6 +15,8 @@ import qbittorrent.exporter.handler.QbtHttpHandler;
  */
 @ApplicationScoped
 public class QbtHttpHandlerBean {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(QbtHttpHandlerBean.class);
 
     @ConfigProperty(name = "qbittorrent.exporter.username")
     private String username;
@@ -47,7 +50,7 @@ public class QbtHttpHandlerBean {
         try {
             return new QbtHttpHandler(client, locale);
         } catch (Exception e) {
-            Log.error("Unable to create HTTP handler", e);
+            LOGGER.error("Unable to create HTTP handler", e);
             return null;
         }
     }

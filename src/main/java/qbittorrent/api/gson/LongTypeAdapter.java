@@ -4,7 +4,8 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-import io.quarkus.logging.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -14,6 +15,8 @@ import java.io.IOException;
  * a long.
  */
 public class LongTypeAdapter extends TypeAdapter<Long> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(LongTypeAdapter.class);
 
     @Override
     public Long read(JsonReader reader) throws IOException {
@@ -25,7 +28,7 @@ public class LongTypeAdapter extends TypeAdapter<Long> {
         try {
             return Long.valueOf(value);
         } catch (NumberFormatException e) {
-            Log.warnv("Could not read long {0} which had an invalid long value. Defaulting value to 0.", value);
+            LOGGER.warn("Could not read long {} which had an invalid long value. Defaulting value to 0.", value);
             return 0L;
         }
     }
