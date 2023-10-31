@@ -3,6 +3,7 @@ package qbittorrent.exporter.collector;
 import io.prometheus.client.Collector;
 import io.prometheus.client.Gauge;
 import qbittorrent.api.model.Torrent;
+import qbittorrent.util.QbtUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,6 +135,9 @@ public class QbtCollector extends Collector implements QbtMetrics {
         .labelNames(
             "name",
             "state",
+            "category",
+            "tags",
+            "tracker",
             "size",
             "progress",
             "seeders",
@@ -344,6 +348,9 @@ public class QbtCollector extends Collector implements QbtMetrics {
         torrentInfo.labels(
             torrent.getName(),
             torrent.getState(),
+            torrent.getCategory(),
+            torrent.getTags(),
+            QbtUtil.getHost(torrent.getTracker()),
             String.valueOf(torrent.getSize()),
             String.valueOf(torrent.getProgress()),
             String.valueOf(torrent.getNumSeeds()),
