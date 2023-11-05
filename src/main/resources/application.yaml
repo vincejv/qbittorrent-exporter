@@ -5,7 +5,9 @@ quarkus:
   resteasy-reactive:
     path: ${METRICS_PATH:/metrics}
   native:
-    additional-build-args: -march=compatibility
+    additional-build-args:
+      -march=compatibility,\
+      -H:+UnlockExperimentalVMOptions,-H:+IncludeAllLocales,-H:-UnlockExperimentalVMOptions
 
 qbittorrent:
   exporter:
