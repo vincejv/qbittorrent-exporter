@@ -7,7 +7,7 @@ env:
 jobs:
   release:
     name: Docker Hub Release
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     strategy:
       fail-fast: false
       matrix:
