@@ -1,4 +1,5 @@
 # qbittorrent-exporter
+### Quarkus fork - Lower ram usage (20-50mb idle) and faster startup!
 
 ![Gradle Build](https://github.com/caseyscarborough/qbittorrent-exporter/actions/workflows/build.yaml/badge.svg) ![Release](https://github.com/caseyscarborough/qbittorrent-exporter/actions/workflows/release.yaml/badge.svg)
 
