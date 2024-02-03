@@ -135,7 +135,7 @@ public class ApiClient {
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             final int statusCode = response.statusCode();
-            LOGGER.info("Response from {} endpoint was {}.", apiUrl, statusCode);
+            LOGGER.debug("Response from {} endpoint was {}.", apiUrl, statusCode);
             if (statusCode == 403 && retries != 0) {
                 // If status code is 403, this means qBittorrent was restarted as
                 // the session token is invalidated on each restart.

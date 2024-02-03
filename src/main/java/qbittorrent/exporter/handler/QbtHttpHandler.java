@@ -36,7 +36,7 @@ public class QbtHttpHandler implements HttpHandler {
 
     @Override
     public void handleRequest(HttpServerResponse serverResponse) {
-        LOGGER.info("Beginning prometheus metrics collection...");
+        LOGGER.debug("Beginning prometheus metrics collection...");
         final long start = System.nanoTime();
         try {
             final List<Torrent> torrents = client.getTorrents();
@@ -87,7 +87,7 @@ public class QbtHttpHandler implements HttpHandler {
             }
 
             final long duration = (System.nanoTime() - start) / 1_000_000;
-            LOGGER.info("Completed in {}ms", duration);
+            LOGGER.debug("Completed in {}ms", duration);
             serverResponse.putHeader(CONTENT_TYPE_HDR_NAME, CONTENT_TYPE);
             serverResponse.send(registry.scrape());
         } catch (Exception e) {
