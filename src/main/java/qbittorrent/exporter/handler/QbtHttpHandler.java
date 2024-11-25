@@ -2,6 +2,7 @@ package qbittorrent.exporter.handler;
 
 import io.micrometer.prometheus.PrometheusConfig;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
+import io.prometheus.client.exporter.common.TextFormat;
 import io.vertx.core.http.HttpServerResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ import java.util.Locale;
 public class QbtHttpHandler implements HttpHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(QbtHttpHandler.class);
-    private static final String CONTENT_TYPE = "text/plain;charset=utf-8";
+    private static final String CONTENT_TYPE = TextFormat.CONTENT_TYPE_OPENMETRICS_100;
     public static final String CONTENT_TYPE_HDR_NAME = "Content-Type";
     private final PrometheusMeterRegistry registry;
     private final QbtCollector collector;
