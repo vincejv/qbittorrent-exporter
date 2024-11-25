@@ -9,8 +9,6 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import qbittorrent.exporter.handler.QbtHttpHandler;
 
-import static io.prometheus.client.exporter.common.TextFormat.CONTENT_TYPE_OPENMETRICS_100;
-
 @Path("")
 public class Application {
 
@@ -19,16 +17,15 @@ public class Application {
 
     @GET
     @Path("metrics")
-    @Produces({CONTENT_TYPE_OPENMETRICS_100, MediaType.TEXT_PLAIN})
+    @Produces({MediaType.TEXT_PLAIN})
     public Uni<Response> metrics() {
         return Uni.createFrom().item(() -> {
             try {
                 // Return the response reactively
-                return Response.ok(qbtHttpHandler.handleRequest(), CONTENT_TYPE_OPENMETRICS_100).build();
+                return Response.ok(qbtHttpHandler.handleRequest()).build();
             } catch (Exception e) {
                 // Return the error response reactively
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                        .type(MediaType.TEXT_PLAIN)
                         .entity("An error occurred. " + e.getMessage())
                         .build();
             }
