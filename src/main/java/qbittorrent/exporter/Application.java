@@ -13,6 +13,7 @@ public class Application {
     QbtHttpHandler qbtHttpHandler;
 
     @GET
+    @Path("metrics")
     public void metrics(HttpServerResponse serverResponse) {
         qbtHttpHandler.handleRequest(serverResponse);
     }
