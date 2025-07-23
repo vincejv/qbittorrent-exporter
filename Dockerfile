@@ -17,5 +17,5 @@ FROM quay.io/quarkus/quarkus-micro-image:2.0
 WORKDIR /work/
 COPY --from=build /code/build/*-runner /work/application
 RUN chmod 775 /work
-EXPOSE 8080
+EXPOSE 17871
 CMD ["./application", "-Xmx50m"]
