@@ -2,7 +2,7 @@ quarkus:
   http:
     host: ${METRICS_HOST:0.0.0.0}
     port: ${METRICS_PORT:17871}
-  resteasy-reactive:
+  rest:
     path: ${METRICS_PATH:/metrics}
   native:
     additional-build-args:
