@@ -40,7 +40,7 @@ jobs:
       - name: Export digest
         run: |
           mkdir -p /tmp/digests
-          digest="${{ steps.build.outputs.digest }}"
+          digest="${{ steps.release.outputs.digest }}"
           touch "/tmp/digests/${digest#sha256:}"
           echo "digest=${digest#sha256:}" >> "$GITHUB_OUTPUT"
       - name: Upload digest
