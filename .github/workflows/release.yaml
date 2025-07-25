@@ -31,7 +31,7 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
       - name: Build and push by digest
         id: build
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           platforms: ${{ matrix.platform }}
@@ -45,7 +45,7 @@ jobs:
       - name: Upload digest
         uses: actions/upload-artifact@v4
         with:
-          name: digests
+          name: digests-${{ steps.export.outputs.digest }}
           path: /tmp/digests/*
           if-no-files-found: error
           retention-days: 1
