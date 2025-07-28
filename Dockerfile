@@ -10,12 +10,17 @@ COPY --chown=quarkus:quarkus gradle.properties /code/
 USER quarkus
 WORKDIR /code
 COPY src /code/src
-RUN ./gradlew build -Dquarkus.package.type=native
+RUN ./gradlew build -Dquarkus.native.enabled=true
 
 ## Stage 2 : create the docker final image
-FROM quay.io/quarkus/quarkus-micro-image:2.0
+FROM quay.io/quarkus/ubi9-quarkus-micro-image:2.0
 WORKDIR /work/
-COPY --from=build /code/build/*-runner /work/application
-RUN chmod 775 /work
+RUN chown 1001 /work \
+    && chmod "g+rwX" /work \
+    && chown 1001:root /work
+COPY --chown=1001:root --chmod=0755 --from=build /code/build/*-runner /work/application
+
 EXPOSE 17871
+USER 1001
+
 CMD ["./application", "-Xmx50m"]
