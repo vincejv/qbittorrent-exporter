@@ -14,7 +14,8 @@ plugins {
     id 'io.quarkus'
 }
 
-group = 'qbittorent.exporter'
+group 'qbittorent.exporter'
+version 'v1.3.5-31'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
