@@ -10,7 +10,9 @@ COPY --chown=quarkus:quarkus gradle.properties /code/
 USER quarkus
 WORKDIR /code
 COPY src /code/src
-RUN ./gradlew build -Dquarkus.native.enabled=true
+RUN ./gradlew build \
+    -Dquarkus.native.enabled=true \
+    -Dquarkus.package.jar.enabled=false
 
 ## Stage 2 : create the docker final image
 FROM quay.io/quarkus/ubi9-quarkus-micro-image:2.0
